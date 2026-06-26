@@ -1,0 +1,34 @@
+type: vertical-stack
+cards:
+  - type: custom:apexcharts-card
+    header:
+      title: Tomorrow's Electricity Prices
+    graph_span: 24h
+    span:
+      start: day+1
+    series:
+      - entity: sensor.tomorrow_prices
+        name: Price
+        type: line
+        curve: smooth
+        transform: return x.split(',').map(Number)
+
+  - type: custom:apexcharts-card
+    header:
+      title: Tomorrow's ON/OFF Schedule
+    graph_span: 24h
+    span:
+      start: day+1
+    series:
+      - entity: sensor.tomorrow_schedule
+        name: Schedule
+        type: area
+        color: '#00ff00'
+        opacity: 0.3
+        transform: return x.split(',').map(Number)
+
+  - type: entities
+    title: Control Status
+    entities:
+      - entity: sensor.cheap_now
+      - entity: switch.sonoff_pow_relay
